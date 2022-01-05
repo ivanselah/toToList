@@ -30,16 +30,28 @@ type InputProps = {
 };
 
 function ToDoList() {
-  const { register, watch } = useForm();
+  const { register, watch, handleSubmit, formState } = useForm();
   const { ToDo, Email, Username, Password } = watch() as InputProps;
-  console.log(ToDo, Email, Username, Password);
+  const onValid = (data: any) => {
+    console.log(data);
+  };
+  console.log(formState.errors);
   return (
     <div>
-      <form>
-        <input {...register('ToDo')} placeholder="Write a to do" />
-        <input {...register('Email')} placeholder="Write a Email" />
+      <form style={{ display: 'flex', flexDirection: 'column' }} onSubmit={handleSubmit(onValid)}>
+        <input {...register('ToDo', { required: true, minLength: 10 })} placeholder="Write a to do" />
+        <input {...register('Email', { required: 'you need email' })} placeholder="Write a Email" />
         <input {...register('Username')} placeholder="Write a Username" />
-        <input {...register('Password')} placeholder="Write a Password" />
+        <input
+          {...register('Password', {
+            required: 'Password is required',
+            minLength: {
+              value: 5,
+              message: 'You password is too short',
+            },
+          })}
+          placeholder="Write a Password"
+        />
         <button>Add</button>
       </form>
     </div>
