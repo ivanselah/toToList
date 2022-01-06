@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
+import MyList from './Test';
 import ToDoList from './ToDoList';
 
 const GlobalStyle = createGlobalStyle`
@@ -63,6 +64,7 @@ function App() {
     <>
       <GlobalStyle />
       <ToDoList />
+      <MyList />
     </>
   );
 }
