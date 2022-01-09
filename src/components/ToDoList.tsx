@@ -9,7 +9,7 @@ function ToDoList() {
   const toDos = useRecoilValue(toDoState);
 
   return (
-    <div>
+    <div style={{ padding: '50px' }}>
       <h1>To Dos</h1>
       <hr />
       <CreateToDo />

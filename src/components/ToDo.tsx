@@ -1,14 +1,75 @@
-import { IToDo } from '../atoms';
+import { IToDo, toDoState } from '../atoms';
+import styled from 'styled-components';
+import { useSetRecoilState } from 'recoil';
 
-function ToDo({ text, category }: IToDo) {
+type Category = 'DOING' | 'TO_DO' | 'DONE'; // <= 이렇게 써도 되지만
+// newCategory: Category, 반복하는 것보단 IToDo['category'] ⭐️
+
+function ToDo({ text, category, id }: IToDo) {
+  // <button onClick={()=>onClick('DOING')}>Doing</button>
+  // const onClick = (newCategory: IToDo['category']) => {
+  //   console.log(newCategory);
+  // };
+  const setToDos = useSetRecoilState(toDoState);
+  const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const {
+      currentTarget: { name },
+    } = event;
+    setToDos((curr) => console.log(curr));
+  };
+
   return (
     <li>
-      <span>{text}</span>
-      {category !== 'DOING' && <button>Doing</button>}
-      {category !== 'TO_DO' && <button>To Do</button>}
-      {category !== 'DONE' && <button>Done</button>}
+      <Container>
+        <Text>{text}</Text>
+        {category !== 'DOING' && (
+          <button name="DOING" onClick={onClick}>
+            Doing
+          </button>
+        )}
+        {category !== 'TO_DO' && (
+          <button name="TO_DO" onClick={onClick}>
+            To Do
+          </button>
+        )}
+        {category !== 'DONE' && (
+          <button name="DONE" onClick={onClick}>
+            Done
+          </button>
+        )}
+      </Container>
     </li>
   );
 }
 
 export default ToDo;
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  button {
+    height: 30px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    &:active {
+      box-shadow: 0px 0px 5px 0px rgba(231, 76, 60, 1);
+    }
+    &:hover {
+      background-color: rgba(231, 76, 60, 1);
+      color: white;
+    }
+  }
+`;
+
+const Text = styled.div`
+  display: flex;
+  height: 30px;
+  padding: 2px;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgba(231, 76, 60, 1);
+  margin-right: 5px;
+`;
