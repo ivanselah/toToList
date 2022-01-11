@@ -6,6 +6,11 @@ export interface IToDo {
   category: 'DONE' | 'DOING' | 'TO_DO';
 }
 
+export const categoryState = atom({
+  key: 'category',
+  default: 'TO_DO',
+});
+
 export const toDoState = atom<IToDo[]>({
   key: 'toDo',
   default: [],
@@ -20,6 +25,15 @@ export const toDoState = atom<IToDo[]>({
 //     return toDos.length;
 //   },
 // });
+
+export const categorySelector = selector({
+  key: 'categorySelector',
+  get: ({ get }) => {
+    const toDos = get(toDoState);
+    const selectedCategory = get(categoryState);
+    return toDos.filter((toDo) => toDo.category === selectedCategory);
+  },
+});
 
 // ⭐️ state 자체를 바꾸는게 아니라, output을 바꾸고 있다는 점 인지
 export const toDoSelector = selector({
