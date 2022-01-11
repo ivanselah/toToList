@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { categorySelector, categoryState, IToDo, toDoSelector, toDoState } from '../atoms';
+import { Categories, Category, categorySelector, categoryState, toDoSelector } from '../atoms';
 import CreateToDo from './CreateToDo';
 import ToDo from './ToDo';
 
@@ -16,17 +16,16 @@ function ToDoList() {
     const {
       currentTarget: { value },
     } = event;
-    setCategory(value);
+    setCategory(value as any);
   };
-  console.log(selectedArray);
   return (
     <div style={{ padding: '50px' }}>
       <h1>To Dos</h1>
       <hr />
       <Select value={category} onInput={onInput}>
-        <option value="TO_DO">To Do</option>
-        <option value="DOING">Doing</option>
-        <option value="DONE">Done</option>
+        <option value={Categories.TO_DO}>To Do</option>
+        <option value={Categories.DOING}>Doing</option>
+        <option value={Categories.DONE}>Done</option>
       </Select>
       <CreateToDo />
       <ul>
