@@ -15,7 +15,13 @@ function ToDo({ text, category, id }: IToDo) {
     const {
       currentTarget: { name },
     } = event;
-    setToDos((curr) => console.log(curr));
+    setToDos((oldToDos) => {
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const newToDo = { text, id, category: name as IToDo['category'] };
+      const newArray = [...oldToDos]; // react로 저장한 state들은 직접적으로 수정할 수 없으므로 복제해서 사용
+      newArray.splice(targetIndex, 1, newToDo);
+      return newArray;
+    });
   };
 
   return (

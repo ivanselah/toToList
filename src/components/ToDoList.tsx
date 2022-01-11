@@ -7,7 +7,7 @@ function ToDoList() {
   // const value = useRecoilValue(toDoState);
   // const modFn = useSetRecoilState(toDoState);
   const toDos = useRecoilValue(toDoState);
-
+  console.log(toDos);
   return (
     <div style={{ padding: '50px' }}>
       <h1>To Dos</h1>
