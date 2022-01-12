@@ -24,25 +24,35 @@ function ToDo({ text, category, id }: IToDo) {
     });
   };
 
+  const onClickDelete = () => {
+    setToDos((oldToDos) => {
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      const newArray = [...oldToDos];
+      newArray.splice(targetIndex, 1);
+      return newArray;
+    });
+  };
+
   return (
     <li>
       <Container>
         <Text>{text}</Text>
         {category !== Categories.DOING && (
           <button name={Categories.DOING} onClick={onClick}>
-            Doing
+            ✅ Doing
           </button>
         )}
         {category !== Categories.TO_DO && (
           <button name={Categories.TO_DO} onClick={onClick}>
-            To Do
+            ✅ To Do
           </button>
         )}
         {category !== Categories.DONE && (
           <button name={Categories.DONE} onClick={onClick}>
-            Done
+            ✅ Done
           </button>
         )}
+        <button onClick={onClickDelete}>❌ Delete</button>
       </Container>
     </li>
   );

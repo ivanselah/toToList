@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import { createGlobalStyle } from 'styled-components';
+import { toDoState } from './atoms';
 import ToDoList from './components/ToDoList';
 
 const GlobalStyle = createGlobalStyle`
@@ -32,7 +34,7 @@ footer, header, hgroup, menu, nav, section {
   box-sizing: border-box;
 }
 body {
-	line-height: 1;
+  line-height: 1;
   font-family: 'Source Sans Pro', sans-serif;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor}
@@ -59,6 +61,14 @@ a {
 `;
 
 function App() {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  useEffect(() => {
+    let values = Object.values(localStorage);
+    const temp = values.filter((item, index) => JSON.parse(values[index]).hasOwnProperty('category')).map((item) => JSON.parse(item));
+    temp.forEach((item) => localStorage.removeItem(String(item.id)));
+    setToDos(temp);
+  }, []);
+
   return (
     <>
       <GlobalStyle />
